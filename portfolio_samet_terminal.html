@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>samet@münchen:~$ whoami</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0D1117;
+  --bg2:#161B22;
+  --bg3:#1C2128;
+  --border:#30363D;
+  --green:#3FB950;
+  --green-dim:#238636;
+  --blue:#58A6FF;
+  --purple:#BC8CFF;
+  --orange:#E3B341;
+  --red:#F85149;
+  --text:#E6EDF3;
+  --muted:#8B949E;
+  --dim:#484F58;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',monospace}
+
+
+nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:.75rem 4%;display:flex;align-items:center;justify-content:space-between}
+.nav-prompt{font-family:'JetBrains Mono',monospace;font-size:.8125rem;color:var(--muted)}
+.nav-prompt .u{color:var(--green)}
+.nav-prompt .at{color:var(--muted)}
+.nav-prompt .host{color:var(--purple)}
+.nav-prompt .path{color:var(--blue)}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);transition:color .15s}
+.nav-links a:hover{color:var(--green)}
+.nav-links a::before{content:'./';color:var(--dim)}
+
+
+.hero{padding:5rem 4% 3rem;max-width:960px;margin:0 auto}
+.terminal{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:3rem}
+.terminal-bar{background:var(--bg3);border-bottom:1px solid var(--border);padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot-r{background:#FF5F57}
+.dot-y{background:#FEBC2E}
+.dot-g{background:#28C840}
+.terminal-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);margin:0 auto}
+.terminal-body{padding:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.875rem;line-height:1.9}
+.line{display:flex;gap:.75rem;margin-bottom:.15rem;flex-wrap:wrap}
+.prompt-sym{color:var(--green)}
+.prompt-u{color:var(--green)}
+.prompt-host{color:var(--purple)}
+.prompt-path{color:var(--blue)}
+.cmd{color:var(--text)}
+.out-key{color:var(--orange)}
+.out-val{color:var(--text)}
+.out-str{color:var(--green)}
+.out-num{color:var(--purple)}
+.out-bool{color:var(--blue)}
+.out-comment{color:var(--muted);font-style:italic}
+.cursor{display:inline-block;width:9px;height:1.1em;background:var(--green);vertical-align:middle;animation:blink 1.1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+
+section{padding:4rem 4%;max-width:960px;margin:0 auto}
+.sec-header{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.sec-hash{font-family:'JetBrains Mono',monospace;color:var(--green);font-size:1.25rem;font-weight:500}
+.sec-title{font-size:1.375rem;font-weight:500;color:var(--text)}
+.sec-line{flex:1;height:1px;background:var(--border)}
+
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.skill-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.8125rem}
+.skill-block:hover{border-color:var(--green-dim)}
+.sb-lang{color:var(--purple);font-weight:500;margin-bottom:.75rem;font-size:.875rem}
+.sb-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.sb-label{color:var(--muted)}
+.sb-bar-wrap{width:120px;height:4px;background:var(--bg3);border-radius:2px}
+.sb-bar{height:100%;border-radius:2px}
+.bar-green{background:var(--green)}
+.bar-blue{background:var(--blue)}
+.bar-purple{background:var(--purple)}
+.bar-orange{background:var(--orange)}
+.sb-tag{font-size:.7rem;padding:.15rem .5rem;border-radius:3px}
+.tag-solid{background:#1a3a1a;color:var(--green);border:1px solid var(--green-dim)}
+.tag-learning{background:#1a2a3a;color:var(--blue);border:1px solid #1f4a7a}
+.tag-keen{background:#2a1a3a;color:var(--purple);border:1px solid #5a3a8a}
+
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;transition:border-color .15s}
+.proj-card:hover{border-color:var(--blue)}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+.proj-icon{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--orange)}
+.proj-status{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.2rem .5rem;border-radius:3px}
+.status-live{background:#1a3a1a;color:var(--green);border:1px solid var(--green-dim)}
+.status-wip{background:#2a2a1a;color:var(--orange);border:1px solid #5a4a1a}
+.proj-name{font-weight:500;font-size:1rem;color:var(--text)}
+.proj-desc{font-size:.875rem;color:var(--muted);line-height:1.65;flex:1}
+.proj-stack{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem}
+.stack-tag{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.2rem .55rem;border-radius:3px;background:var(--bg3);color:var(--muted);border:1px solid var(--border)}
+
+
+.tl{display:flex;flex-direction:column;gap:0}
+.tl-item{display:grid;grid-template-columns:120px 1px 1fr;gap:0 1.5rem;padding-bottom:2rem}
+.tl-year{font-family:'JetBrains Mono',monospace;font-size:.8125rem;color:var(--green);text-align:right;padding-top:.2rem}
+.tl-spine{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--bg2);border:2px solid var(--green);flex-shrink:0;margin-top:.3rem}
+.tl-line{width:1px;background:var(--border);flex:1;margin-top:4px}
+.tl-content{padding-bottom:.25rem}
+.tl-content h3{font-weight:500;font-size:.9375rem;color:var(--text);margin-bottom:.375rem}
+.tl-content p{font-size:.875rem;color:var(--muted);line-height:1.65}
+.tl-item:last-child .tl-line{display:none}
+
+
+.about-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:.8125rem;line-height:2}
+.ab-comment{color:var(--muted)}
+.ab-key{color:var(--blue)}
+.ab-str{color:var(--green)}
+.ab-indent{padding-left:1.5rem}
+.ab-brace{color:var(--orange)}
+
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem;font-family:'JetBrains Mono',monospace}
+.cc-label{font-size:.7rem;color:var(--muted);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.08em}
+.cc-value{font-size:.9375rem;color:var(--text)}
+.cc-sub{font-size:.75rem;color:var(--muted);margin-top:.25rem}
+.open-card{background:var(--bg2);border:1px solid var(--green-dim);border-radius:8px;padding:1.5rem;font-family:'JetBrains Mono',monospace;grid-column:1/-1}
+.oc-title{color:var(--green);font-size:.875rem;margin-bottom:1rem}
+.oc-items{display:flex;flex-wrap:wrap;gap:.625rem}
+.oc-item{background:var(--bg3);border:1px solid var(--green-dim);color:var(--green);font-size:.75rem;padding:.3rem .75rem;border-radius:4px}
+
+
+footer{border-top:1px solid var(--border);padding:2rem 4%;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)}
+footer .green{color:var(--green)}
+
+@media(max-width:700px){
+  .contact-grid{grid-template-columns:1fr}
+  .tl-item{grid-template-columns:80px 1px 1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-prompt mono">
+    <span class="u">samet</span><span class="at">@</span><span class="host">münchen</span><span class="at">:</span><span class="path">~</span><span style="color:var(--green)"> $</span>
+  </span>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#timeline">timeline</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-r"></span>
+      <span class="dot dot-y"></span>
+      <span class="dot dot-g"></span>
+      <span class="terminal-title">bash — samet@münchen: ~</span>
+    </div>
+    <div class="terminal-body">
+      <div class="line">
+        <span class="prompt-u">samet</span><span style="color:var(--muted)">@</span><span class="prompt-host">münchen</span><span style="color:var(--muted)">:</span><span class="prompt-path">~</span><span class="prompt-sym"> $</span>
+        <span class="cmd">whoami --verbose</span>
+      </div>
+      <div style="margin:.75rem 0 .25rem;color:var(--out-comment,#8B949E);font-style:italic;font-family:'JetBrains Mono',monospace;font-size:.875rem"># Samet Hakan Cakir — Bewerber</div>
+      <div class="line"><span class="out-key">name</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="out-str">"Samet Hakan Cakir"</span></div>
+      <div class="line"><span class="out-key">age</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="out-num">16</span></div>
+      <div class="line"><span class="out-key">location</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="out-str">"München, Bayern"</span></div>
+      <div class="line"><span class="out-key">school</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="out-str">"Städt. Rudolf Diesel Realschule"</span></div>
+      <div class="line"><span class="out-key">class</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="out-str">"10. Klasse"</span></div>
+      <div class="line"><span class="out-key">target</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="out-str">"Ausbildung Fachinformatiker Anwendungsentwicklung"</span></div>
+      <div class="line"><span class="out-key">languages</span><span style="color:var(--muted)">:</span>&nbsp;&nbsp;<span class="out-bool">["Deutsch", "Türkisch", "Englisch"]</span></div>
+      <div class="line"><span class="out-key">coding_since</span><span style="color:var(--muted)">:</span>&nbsp;<span class="out-num">2020</span>&nbsp;<span style="color:var(--muted);font-style:italic"># Alter: 10–11 Jahre</span></div>
+      <div class="line"><span class="out-key">self_taught</span><span style="color:var(--muted)">:</span>&nbsp;<span class="out-bool">true</span></div>
+      <div style="margin-top:1rem" class="line">
+        <span class="prompt-u">samet</span><span style="color:var(--muted)">@</span><span class="prompt-host">münchen</span><span style="color:var(--muted)">:</span><span class="prompt-path">~</span><span class="prompt-sym"> $</span>
+        <span class="cursor"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section id="about">
+  <div class="sec-header">
+    <span class="sec-hash">//</span>
+    <span class="sec-title">Über mich</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="about-card">
+    <div class="ab-comment">/* motivation.js */</div>
+    <div style="margin-top:.75rem">
+      <span class="ab-key">const</span> <span style="color:var(--text)">samet</span> <span style="color:var(--orange)">=</span> <span class="ab-brace">{</span>
+    </div>
+    <div class="ab-indent">
+      <div><span class="ab-key">antrieb</span><span style="color:var(--muted)">:</span> <span class="ab-str">"Mit 10 Jahren die erste Webseite aus purer Neugier, auf dem Laptop meines Bruders."</span><span style="color:var(--muted)">,</span></div>
+      <div><span class="ab-key">heute</span><span style="color:var(--muted)">:</span> <span class="ab-str">"HTML, CSS, Python – alles selbst gelernt. Kein Kurs. Nur Motivation."</span><span style="color:var(--muted)">,</span></div>
+      <div><span class="ab-key">ziel</span><span style="color:var(--muted)">:</span> <span class="ab-str">"Echte Software bauen, im Team arbeiten, Profi werden."</span><span style="color:var(--muted)">,</span></div>
+      <div><span class="ab-key">abschluss</span><span style="color:var(--muted)">:</span> <span class="ab-str">"Sommer 2026"</span><span style="color:var(--muted)">,</span></div>
+      <div><span class="ab-key">bereit</span><span style="color:var(--muted)">:</span> <span style="color:var(--blue)">true</span><span style="color:var(--muted)">,</span></div>
+      <div><span class="ab-key">lernbereitschaft</span><span style="color:var(--muted)">:</span> <span style="color:var(--purple)">Infinity</span></div>
+    </div>
+    <div><span class="ab-brace">}</span></div>
+  </div>
+</section>
+
+
+<section id="skills">
+  <div class="sec-header">
+    <span class="sec-hash">//</span>
+    <span class="sec-title">Skills</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="sb-lang">HTML5 <span class="sb-tag tag-solid">solide</span></div>
+      <div class="sb-row"><span class="sb-label">Struktur & Semantik</span><div class="sb-bar-wrap"><div class="sb-bar bar-green" style="width:75%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Responsive</span><div class="sb-bar-wrap"><div class="sb-bar bar-green" style="width:65%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">seit 2020</span><div class="sb-bar-wrap"><div class="sb-bar bar-green" style="width:100%"></div></div></div>
+    </div>
+    <div class="skill-block">
+      <div class="sb-lang">CSS3 <span class="sb-tag tag-solid">solide</span></div>
+      <div class="sb-row"><span class="sb-label">Flexbox / Grid</span><div class="sb-bar-wrap"><div class="sb-bar bar-blue" style="width:65%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Animationen</span><div class="sb-bar-wrap"><div class="sb-bar bar-blue" style="width:55%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Design</span><div class="sb-bar-wrap"><div class="sb-bar bar-blue" style="width:70%"></div></div></div>
+    </div>
+    <div class="skill-block">
+      <div class="sb-lang">Python <span class="sb-tag tag-learning">lernend</span></div>
+      <div class="sb-row"><span class="sb-label">Grundlagen</span><div class="sb-bar-wrap"><div class="sb-bar bar-purple" style="width:45%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Skripte</span><div class="sb-bar-wrap"><div class="sb-bar bar-purple" style="width:40%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Logik</span><div class="sb-bar-wrap"><div class="sb-bar bar-purple" style="width:55%"></div></div></div>
+    </div>
+    <div class="skill-block">
+      <div class="sb-lang">Soft Skills <span class="sb-tag tag-keen">stark</span></div>
+      <div class="sb-row"><span class="sb-label">Eigeninitiative</span><div class="sb-bar-wrap"><div class="sb-bar bar-orange" style="width:95%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Problemlösung</span><div class="sb-bar-wrap"><div class="sb-bar bar-orange" style="width:85%"></div></div></div>
+      <div class="sb-row"><span class="sb-label">Lernbereitschaft</span><div class="sb-bar-wrap"><div class="sb-bar bar-orange" style="width:99%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="projects">
+  <div class="sec-header">
+    <span class="sec-hash">//</span>
+    <span class="sec-title">Projekte</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-icon">&lt;/&gt;</span>
+        <span class="proj-status status-live">● live</span>
+      </div>
+      <div class="proj-name">Persönliche Portfolio-Seite</div>
+      <div class="proj-desc">Komplette Über-Mich-Webseite mit Timeline, Skill-Grid und responsivem Design. Eigenes Design, eigener Code – gebaut zur Bewerbung.</div>
+      <div class="proj-stack">
+        <span class="stack-tag">HTML5</span>
+        <span class="stack-tag">CSS3</span>
+        <span class="stack-tag">Google Fonts</span>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-icon">{&nbsp;}</span>
+        <span class="proj-status status-live">● aktiv</span>
+      </div>
+      <div class="proj-name">Python Skripte</div>
+      <div class="proj-desc">Erste eigene Skripte: kleine Utilities, Algorithmen und Logik-Experimente. Zeigt den Einstieg in echtes Programmierdenken.</div>
+      <div class="proj-stack">
+        <span class="stack-tag">Python 3</span>
+        <span class="stack-tag">Scripting</span>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top">
+        <span class="proj-icon">▲</span>
+        <span class="proj-status status-wip">◌ geplant</span>
+      </div>
+      <div class="proj-name">Nächstes Projekt</div>
+      <div class="proj-desc">Interaktive Web-App oder Python-Backend noch in der Planung. Ausbildungsstart = perfekter Zeitpunkt zum Durchstarten.</div>
+      <div class="proj-stack">
+        <span class="stack-tag">JavaScript?</span>
+        <span class="stack-tag">Flask?</span>
+        <span class="stack-tag">TBD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="timeline">
+  <div class="sec-header">
+    <span class="sec-hash">//</span>
+    <span class="sec-title">my-journey</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-year">~2020</div>
+      <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <h3>Erste HTML-Seite</h3>
+        <p>Auf dem Laptop meines Bruders. Ohne Kurs, ohne Anleitung nur YouTube und Neugier. Der erste Moment, wo mir klar wurde: Das ist mein Ding.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">~2021</div>
+      <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <h3>CSS & Webdesign</h3>
+        <p>Entdeckung von CSS, wie man Seiten nicht nur baut, sondern auch gestaltet. Flexbox, Farben, Layouts und das Gespür für Design.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">~2023</div>
+      <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <h3>Python, echtes Programmieren</h3>
+        <p>Der Schritt zur richtigen Programmiersprache. Variablen, Schleifen, Funktionen und das Verständnis, wie Software wirklich denkt.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2026</div>
+      <div class="tl-spine"><div class="tl-dot" style="border-color:var(--orange)"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <h3>Mittlere Reife & Ausbildungsstart</h3>
+        <p>10. Klasse, Rudolf Diesel Realschule München. Abschluss Sommer 2026. Klares Ziel: Fachinformatiker für Anwendungsentwicklung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="contact">
+  <div class="sec-header">
+    <span class="sec-hash">//</span>
+    <span class="sec-title">Kontakt</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="cc-label">Standort</div>
+      <div class="cc-value">München, Bayern</div>
+    </div>
+    <div class="contact-card">
+      <div class="cc-label">Verfügbar ab</div>
+      <div class="cc-value">Sommer 2026</div>
+      <div class="cc-sub">nach Mittlerer Reife</div>
+    </div>
+    <div class="contact-card">
+      <div class="cc-label">GitHub</div>
+      <div class="cc-value" style="color:var(--blue)"><a href="https://github.com/SametHakanCakir/Meine-Bewerbung" style="color:var(--blue)">github.com/SametHakanCakir/Meine-Bewerbung</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="cc-label">Bewerbungsunterlagen</div>
+      <div class="cc-value">auf Anfrage</div>
+    </div>
+    <div class="open-card">
+      <div class="oc-title">$ cat open_to.txt</div>
+      <div class="oc-items">
+        <span class="oc-item">Fachinformatiker Anwendungsentwicklung</span>
+        <span class="oc-item">Webentwicklung & Frontend</span>
+        <span class="oc-item">Software-Entwicklung</span>
+        <span class="oc-item">IT mit Fokus auf Code</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="green">samet</span>@münchen:~$ echo <span class="green">"Bereit für die Ausbildung."</span><br>
+  <span style="color:var(--dim);margin-top:.5rem;display:inline-block">Made with HTML & CSS · München 2026
+  </span>
+</footer>
+
+</body>
+</html>
